@@ -9,7 +9,6 @@ import os
 import time
 
 
-
 def face_detection(img,model):
     """
     Face detection on img
@@ -22,13 +21,19 @@ def face_detection(img,model):
     """
     
     if model=="cv2":
+        img=cv2.imread(img)
         gray=cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         haar_cascade=cv2.CascadeClassifier(Path["haar_face"])
         faces_rect=haar_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=3)
-        return faces_rect[0]
+        print(faces_rect)
+        # crop=img[x1:x2, y1:y2]
+        # cv2.imwrite(Path["test"])
+        # return faces_rect[0]
 
 
     if model=="loc":
         faces_rect = face_recognition.face_locations(img, model="mtcnn")  #("hog") обработка на CPU
         return faces_rect
 
+
+face_detection(f"{Path['image']}\\Anastasia_Khudyakova\\photo_1_2023-10-11_19-09-02.jpg", "cv2")
