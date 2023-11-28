@@ -1,9 +1,0 @@
-[INFO] Total number of frames: 266 
-[INFO] Number of frames with people: 50 
-[INFO] Number of frames with user: 28 
-[INFO] Total number of correctly processed frames: 28 
-[INFO] Number of frames with faces: 19% 
-[INFO] Of these, users recognized: 56% 
-[INFO] Of these, users were correctly recognized: 100% 
-[INFO] Final precision is 56% 
-[INFO] The processing time was: 26790.789ms 
