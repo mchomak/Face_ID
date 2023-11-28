@@ -5,7 +5,7 @@ import face_recognition
 from config import Path
 import tools
 
-def train_model_by_img(file_name, user_name):
+def train_model_by_img(file_name, user_name, im_path):
     """
     Функция создает кодировку лица человека по его фотографиям
     Input:
@@ -21,13 +21,13 @@ def train_model_by_img(file_name, user_name):
         sys.exit()
 
     known_encodings = []
-    images = os.listdir(f'{Path["image"]}\\{file_name}')
+    images = os.listdir(f'{im_path}\\{file_name}')
 
 
     for(i, image) in enumerate(images):
         print(f"[+] processing img {i + 1}/{len(images)}")
 
-        face_img = face_recognition.load_image_file(f'{Path["image"]}\\{file_name}\\{image}')
+        face_img = face_recognition.load_image_file(f'{im_path}\\{file_name}\\{image}')
         if len(face_recognition.face_encodings(face_img))>0:
             face_enc = face_recognition.face_encodings(face_img)[0]
 
@@ -59,11 +59,17 @@ def train_model_by_img(file_name, user_name):
     return f"[INFO] File {file_name}_encodings.pickle successfully created"
 
 
-def main(user_count, file_name=None, user_name=None):
-    if user_count==1:
-        print(train_model_by_img(file_name, user_name))
+def main(user_count, mode="photo", file_name=None, user_name=None):
+    if mode=="photo":
+        im_path=Path["image"]
 
-    if user_count=="all":
+    elif mode=="video":
+        im_path=Path["circle_image"]
+
+    if user_count==1:
+        print(train_model_by_img(file_name, user_name, im_path))
+
+    elif user_count=="all":
         files=os.listdir(Path["image"])
         count_user=len(files)
         print(f"[INFO] Total number of users {count_user}")
@@ -71,11 +77,11 @@ def main(user_count, file_name=None, user_name=None):
         ready_user=0
         for file in files:
             print(f"[INFO] Now processing user: {file}")
-            print(train_model_by_img(file))
+            print(train_model_by_img(file, user_name, im_path))
             ready_user+=1
             left=round((count_user-ready_user)*100/count_user)
             print(f"[INFO] {left}% left \n")
 
 
 if __name__ == '__main__':
-    main(1, "Nikita_Kholodarev", "Nikita_Kholodarev")
+    main(1, "video", "Dima_Shubin", "Dima_Shubin")
