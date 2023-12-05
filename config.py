@@ -14,4 +14,5 @@ Path={
     "test":os.path.join(Dir, "data", "test"),
     "haar_face":os.path.join(Dir, "data", "models", "haarcascade_frontalface_default.xml"),
     "result":os.path.join(Dir, "docks", "results"),
+    "cam_rep":os.path.join(Dir, "docks", "camera_report"),
 }

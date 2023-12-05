@@ -79,7 +79,8 @@ def detect_person_in_video(name=None, tolerance=0.5, mode="camera", video_num=-1
                             username = encod["name"]
                             print(f"[INFO] пользователь {username} был замечен на камере")
                             image=image_processing(image=image, face_location=face_location, username=username)
-                            with open("Camera_report.txt", "a") as file:
+                            rep_path=os.path.join(Path["cam_rep"], "Camera_report.txt")
+                            with open(rep_path, "a") as file:
                                 file.write(f"{username} \n")
                             break
                 
