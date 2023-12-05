@@ -3,6 +3,23 @@ import cv2
 import os
 
 
+def remove_files(user_name, i_path):
+    """
+    Эта функция удаляет не user_pathнужные данные
+        user_name: (str) имя пользователя фото которого надо удалить
+        user_path: (str) абсолютный путь к папке с фото пользователя
+    """
+    if check_dir(user_name, i_path):
+        i_path=os.path.join(i_path, user_name)
+        files=os.listdir(i_path)
+        delete_list=[]
+        for file in files:
+            os.remove(os.path.join(i_path, file))
+            delete_list.append(file)
+        print(f"[INFO] {len(delete_list)} - фотографий было удалено")
+        del delete_list, files
+
+
 def face_detection(img,model):
     """
     Face detection on img
@@ -31,22 +48,38 @@ def face_detection(img,model):
         return faces_rect
 
 
-def find_file(u_name, video_num):
+def find_file(user_name, video_num):
+    """
+    Searching for the right file
+    Input:
+        user_name: (str) имя пользователя видео которого надо обработать
+        video_num: (int) number of video in dir
+    Output:
+        vid_path: (str) full video path
+    """
     video_num=str(video_num)
-    videos=os.listdir(os.path.join(Path['video'], u_name))
+    videos=os.listdir(os.path.join(Path['video'], user_name))
     vid_path=False
     for vid in videos:
         if video_num in vid:
-            vid_path=os.path.join(Path['video'], u_name, vid)
+            vid_path=os.path.join(Path['video'], user_name, vid)
             break
     
     return vid_path
 
 
-def check_dir(user_name, user_path, i_path):
+def check_dir(user_name, i_path):
+    """
+    Checks for a directory 
+    Input:
+        user_name: (str) имя пользователя видео которого надо обработать
+        i_path: (str) абсолютный путь до папки, где храянтся фото пользователя
+    Output:
+        vid_path: (str) full video path
+    """
     have_dir=(user_name in  os.listdir(i_path))
     if have_dir==False:
-        os.mkdir(user_path)
+        os.mkdir(os.path.join(i_path, user_name))
         print(f"[INFO] Папка {user_name} была создана")
         return False 
     else:
@@ -55,10 +88,12 @@ def check_dir(user_name, user_path, i_path):
 
 def create_report(name, v_num, time, frame_all, frame_detect, frame_ricognise, frame_sucsefull):
     """
-    Create the report file with model precision, processing time
+    Create the report file with model precision and processing time
     Input:
         name: (str) the name of the user on the video
         time: (float) program runtime
+    Output:
+        Save the report file
     """
     with open(f"Report_{name}_{v_num}.txt", "w") as report:
         report.writelines([

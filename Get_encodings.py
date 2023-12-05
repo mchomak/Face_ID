@@ -59,15 +59,30 @@ def train_model_by_img(file_name, user_name, im_path):
     return f"[INFO] File {file_name}_encodings.pickle successfully created"
 
 
-def main(user_count, mode="photo", file_name=None, user_name=None):
+def main(user_count=1, mode="photo", file_name=None, user_name=None):
+    """
+    Input:
+        user_count: (int) количество пользователей, которое должно быть обработано, 1 или all (все)
+        mode: (str) "photo"--работаем с фото, "video"--работаем с видео
+        file_name: (str) название файла кодировки
+        user_name: (str) имя пользователя, оно также будет выводится на ПО охранника
+    Output:
+        Создается кодировка лица пользователя    
+    """
+
     if mode=="photo":
-        im_path=Path["image"]
+        i_path=Path["image"]
 
     elif mode=="video":
-        im_path=Path["circle_image"]
+        i_path=Path["circle_image"]
+    
+    else:
+        print(f"[INFO] {mode} Такого мода работы нет")
+        sys.exit()
 
     if user_count==1:
-        print(train_model_by_img(file_name, user_name, im_path))
+        print(train_model_by_img(file_name, user_name, i_path))
+        tools.remove_files(user_name, i_path)
 
     elif user_count=="all":
         files=os.listdir(Path["image"])
@@ -77,7 +92,8 @@ def main(user_count, mode="photo", file_name=None, user_name=None):
         ready_user=0
         for file in files:
             print(f"[INFO] Now processing user: {file}")
-            print(train_model_by_img(file, user_name, im_path))
+            print(train_model_by_img(file, user_name, i_path))
+            tools.remove_files(user_name, i_path)
             ready_user+=1
             left=round((count_user-ready_user)*100/count_user)
             print(f"[INFO] {left}% left \n")
