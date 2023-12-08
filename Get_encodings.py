@@ -15,8 +15,9 @@ def train_model_by_img(file_name, user_name, im_path):
         (str) Program operation result (error/success)
         save ("nsme"_encodings.pickle) file 
     """
-
-    if not os.path.exists("data"):
+    if not os.getcwd().endswith('Face_ID'):
+        os.chdir(os.getcwd().replace('bot', '')[:-1])
+    if not os.path.exists("data") and not os.path.exists('Face_ID/data'):
         print("[ERROR] there is no directory 'dataset'")
         sys.exit()
 
