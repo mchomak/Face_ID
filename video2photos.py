@@ -47,4 +47,4 @@ def main(user_name, ImgPath):
     video_2_photo(user_name, ImgPath)
     
 if __name__ == '__main__':
-    main("Dima_Shubin", Path["circle_image"])
+    main("Kaneeva_Evelina", Path["circle_image"])

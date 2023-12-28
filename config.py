@@ -2,7 +2,7 @@ import os
 # место для хранения необходимых данных
 
 Dir=os.getcwd()
-if 'bot' in Dir: Dir = Dir.replace('bot', '')
+
 Path={
     "face":os.path.join(Dir, "data", "faces"),
     "data":os.path.join(Dir, "data"),

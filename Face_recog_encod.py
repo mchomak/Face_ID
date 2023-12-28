@@ -84,10 +84,10 @@ def detect_person_in_video(name=None, tolerance=0.5, mode="camera", video_num=-1
                                 file.write(f"{username} \n")
                             break
                 
-            #     cv2.imshow("Detect_person_in_video is running", image)
+                cv2.imshow("Detect_person_in_video is running", image)
             
-            # if cv2.waitKey(1) & 0xFF == ord('q'): 
-            #     break
+            if cv2.waitKey(1) & 0xFF == ord('q'): 
+                break
 
 
     elif mode=="video":
